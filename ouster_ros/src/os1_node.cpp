@@ -43,6 +43,8 @@ int main(int argc, char** argv) {
     auto os1_lidar_port = nh.param("os1_lidar_port", -1);
     auto os1_imu_port = nh.param("os1_imu_port", -1);
     auto replay_mode = nh.param("replay", true);
+    auto lidar_frame_id = nh.param("lidar_frame_id", std::string("os1"));
+    auto imu_frame_id = nh.param("imu_frame_id", std::string("os1_imu"));
 
     auto lidar_pub = nh.advertise<sensor_msgs::PointCloud2>("points", 10);
     auto imu_pub = nh.advertise<sensor_msgs::Imu>("imu", 10);
@@ -50,11 +52,11 @@ int main(int argc, char** argv) {
     auto lidar_handler = ouster_ros::OS1::batch_packets(
         scan_dur, [&](ns scan_ts, const ouster_ros::OS1::CloudOS1& cloud) {
             lidar_pub.publish(
-                ouster_ros::OS1::cloud_to_cloud_msg(cloud, scan_ts));
+                ouster_ros::OS1::cloud_to_cloud_msg(cloud, scan_ts, lidar_frame_id));
         });
 
     auto imu_handler = [&](const PacketMsg& p) {
-        imu_pub.publish(ouster_ros::OS1::packet_to_imu_msg(p));
+        imu_pub.publish(ouster_ros::OS1::packet_to_imu_msg(p, imu_frame_id));
     };
 
     if (replay_mode) {

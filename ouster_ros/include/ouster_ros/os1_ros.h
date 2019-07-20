@@ -61,7 +61,7 @@ ns timestamp_of_lidar_packet(const PacketMsg& pm);
  * @param pm packet message populated by read_imu_packet
  * @returns ROS sensor message with fields populated from the OS1 packet
  */
-sensor_msgs::Imu packet_to_imu_msg(const PacketMsg& pm);
+sensor_msgs::Imu packet_to_imu_msg(const PacketMsg& pm, const std::string& frame = "os1_imu");
 
 /**
  * Accumulate points from a lidar packet message into a PCL point cloud. All

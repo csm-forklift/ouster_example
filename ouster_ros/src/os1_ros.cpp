@@ -27,14 +27,14 @@ bool read_lidar_packet(const client& cli, PacketMsg& m) {
     return read_lidar_packet(cli, m.buf.data());
 }
 
-sensor_msgs::Imu packet_to_imu_msg(const PacketMsg& p) {
+sensor_msgs::Imu packet_to_imu_msg(const PacketMsg& p, const std::string& frame) {
     const double standard_g = 9.80665;
     sensor_msgs::Imu m;
     const uint8_t* buf = p.buf.data();
 
     // m.header.stamp.fromNSec(imu_gyro_ts(buf));
     m.header.stamp = ros::Time::now();
-    m.header.frame_id = "os1_imu";
+    m.header.frame_id = frame;
 
     m.orientation.x = 0;
     m.orientation.y = 0;

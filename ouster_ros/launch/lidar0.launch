@@ -19,6 +19,8 @@
         <param name="os1_lidar_port" value="$(arg os1_lidar_port)"/>
         <param name="os1_imu_port" value="$(arg os1_imu_port)"/>
         <param name="replay" value="$(arg replay)"/>
+        <param name="lidar_frame_id" value="lidar0_link"/>
+        <param name="imu_frame_id" value="lidar0_imu"/>
     </group>
 
     <node unless="$(arg respawn)" pkg="ouster_ros" type="os1_node" name="os1_node2" output="screen" required="true" />
