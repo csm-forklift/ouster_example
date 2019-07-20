@@ -1,0 +1,8 @@
+<!-- Starts up all nodes for running a single camera -->
+<launch>
+
+    <!-- Camera Pose Node -->
+    <node pkg="extractlidar" name="lidarextract" type="lidarextract" respawn="true" output="screen"/>
+
+
+</launch>

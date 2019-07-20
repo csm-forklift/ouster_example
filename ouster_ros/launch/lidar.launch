@@ -1,0 +1,11 @@
+<launch>
+
+    <!-- Start 'dnsmasq' to lease dhcp address stuff -->
+    <node pkg="ouster_ros" name="run_dnsmasq" type="run_dnsmasq.sh" />
+
+    <!-- Start lidar launch file from ouster -->
+    <include file="$(find ouster_ros)/launch/os1.launch">
+        <arg name="respawn" value="true" />
+    </include>
+
+</launch>
