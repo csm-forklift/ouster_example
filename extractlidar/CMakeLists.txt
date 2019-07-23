@@ -19,7 +19,7 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 catkin_package(
-INCLUDE_DIRS include
+INCLUDE_DIRS
   CATKIN_DEPENDS roscpp rospy geometry_msgs std_msgs sensor_msgs
 )
 
@@ -29,7 +29,6 @@ INCLUDE_DIRS include
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-include_directories(include)
 include_directories(${catkin_INCLUDE_DIRS})
 #include_directories(${PCL_INCLUDE_DIRS})
 #link_directories(${PCL_LIBRARY_DIRS})
