@@ -33,3 +33,6 @@ add_dependencies(ouster_ros ${PROJECT_NAME}_gencpp)
 
 add_executable(os1_node src/os1_node.cpp)
 target_link_libraries(os1_node ouster_ros ${catkin_LIBRARIES})
+
+add_executable(lidar_angle src/lidar_angle.cpp)
+target_link_libraries(lidar_angle ${catkin_LIBRARIES})

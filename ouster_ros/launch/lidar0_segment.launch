@@ -1,5 +1,6 @@
 <launch>
 
+    <arg name="dnsmasq" default="true"/>
     <arg name="respawn" default="true" />
     <!-- 100000000ns = 0.1s : 10Hz, 50000000ns = 0.05s : 20Hz -->
     <arg name="scan_dur_ns" default="1000" doc="nanoseconds to batch lidar packets before publishing a cloud"/>
@@ -10,7 +11,7 @@
     <arg name="replay" default="false" doc="when true, the node will listen on ~/lidar_packets and ~/imu_packets for data instead of attempting to connect to a sensor"/>
 
     <!-- Start 'dnsmasq' to lease dhcp address stuff -->
-    <node pkg="ouster_ros" name="run_dnsmasq" type="run_dnsmasq.sh" />
+    <node if="$(arg dnsmasq)" pkg="ouster_ros" name="run_dnsmasq" type="run_dnsmasq.sh" />
 
     <group ns="/os1_node2">
         <param name="scan_dur_ns" value="$(arg scan_dur_ns)"/>

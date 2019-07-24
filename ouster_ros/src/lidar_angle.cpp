@@ -43,48 +43,48 @@ pcl::PointCloud<PointT>::Ptr rot3_cloud(new pcl::PointCloud<PointT>);
             pcl_conversions::toPCL(msg, pcl_pc2a);
             pcl::fromPCLPointCloud2(pcl_pc2a, *scene_cloud);
 
-            float theta_min = 5.0 * (M_PI/180.0); // convert degrees to radians
-            float theta_max = 50.0 * (M_PI/180.0); // convert degrees to radians
-            float phi_min = (M_PI/2) - theta_min;
-            float phi_max = (M_PI/2) - theta_max;
-
-            translation.x() = 0.0;
-            translation.y() = 0.0;
-            translation.z() = 0.0;
-
-            rotation = Eigen::AngleAxisf(-1*phi_min, Eigen::Vector3f::UnitZ());
+            // float theta_min = 5.0 * (M_PI/180.0); // convert degrees to radians
+            // float theta_max = 50.0 * (M_PI/180.0); // convert degrees to radians
+            // float phi_min = (M_PI/2) - theta_min;
+            // float phi_max = (M_PI/2) - theta_max;
+            //
+            // translation.x() = 0.0;
+            // translation.y() = 0.0;
+            // translation.z() = 0.0;
+            //
+            // rotation = Eigen::AngleAxisf(-1*phi_min, Eigen::Vector3f::UnitZ());
 
             //transformPointCloud(scene_cloud, temp_cloud, msg.header.frame_id, "os1");
 
-            pcl::transformPointCloud(*scene_cloud, *rot1_cloud, translation, rotation);
+            // pcl::transformPointCloud(*scene_cloud, *rot1_cloud, translation, rotation);
 
 
             pcl::PassThrough<PointT> pass; // passthrough filter
 
             pass.setInputCloud(scene_cloud);
             pass.setFilterFieldName("x");
-            pass.setFilterLimits(0.0, 120.0);
+            pass.setFilterLimits(0.01, 120.0);
             pass.filter(*rot1_cloud);
 
-            rotation = Eigen::AngleAxisf((phi_min+phi_max), Eigen::Vector3f::UnitZ());
-
-            pcl::transformPointCloud(*rot1_cloud, *rot2_cloud, translation, rotation);
-            pass.setInputCloud(rot1_cloud);
-            pass.setFilterFieldName("x");
-            pass.setFilterLimits(0.0, 120.0);
-            pass.filter(*rot2_cloud);
-
-            rotation = Eigen::AngleAxisf(-1*phi_max, Eigen::Vector3f::UnitZ());
-
-            pcl::transformPointCloud(*rot2_cloud, *rot3_cloud, translation, rotation);
-            pass.setInputCloud(rot2_cloud);
-            pass.setFilterFieldName("z");
-            pass.setFilterLimits(-0.05, 0.15);
-            pass.filter(*rot3_cloud);
+            // rotation = Eigen::AngleAxisf((phi_min+phi_max), Eigen::Vector3f::UnitZ());
+            //
+            // pcl::transformPointCloud(*rot1_cloud, *rot2_cloud, translation, rotation);
+            // pass.setInputCloud(rot1_cloud);
+            // pass.setFilterFieldName("x");
+            // pass.setFilterLimits(0.0, 120.0);
+            // pass.filter(*rot2_cloud);
+            //
+            // rotation = Eigen::AngleAxisf(-1*phi_max, Eigen::Vector3f::UnitZ());
+            //
+            // pcl::transformPointCloud(*rot2_cloud, *rot3_cloud, translation, rotation);
+            // pass.setInputCloud(rot2_cloud);
+            // pass.setFilterFieldName("z");
+            // pass.setFilterLimits(-10, 10);
+            // pass.filter(*rot3_cloud);
 
             sensor_msgs::PointCloud2 pc_msg;
             pcl::PCLPointCloud2 pcl_pc2;
-            pcl::toPCLPointCloud2(*rot3_cloud, pcl_pc2);
+            pcl::toPCLPointCloud2(*rot1_cloud, pcl_pc2);
             pcl_conversions::fromPCL(pcl_pc2, pc_msg);
             pcl_pub.publish(pc_msg);
             //std::cout<<"CLEAN: "<<pc_msg.data.size() << '\n';
@@ -99,8 +99,8 @@ pcl::PointCloud<PointT>::Ptr rot3_cloud(new pcl::PointCloud<PointT>);
 };
 
 int main(int argc, char** argv){
-    ROS_INFO("Initializing the lidar_filter_node");
-    ros::init(argc,argv, "lidar_filter_node");
+    ROS_INFO("Initializing the lidar_angle");
+    ros::init(argc,argv, "lidar_angle");
 
     FilterLidar FL;
     ros::spin();
