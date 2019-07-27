@@ -29,8 +29,8 @@ class FilterLidar {
         Eigen::Affine3f affine_transform;
     public:
         FilterLidar() : nh_("~"),  translation(0,0,0), rotation(1,0,0,0) {
-            back_point_cloud_name = "/os1_node2/points";
-            pcl_pub = nh_.advertise<sensor_msgs::PointCloud2>("/back_lidar_points",1);
+            back_point_cloud_name = "input_points";
+            pcl_pub = nh_.advertise<sensor_msgs::PointCloud2>("filtered_points",1);
             pcl_sub = nh_.subscribe(back_point_cloud_name.c_str(),1, &FilterLidar::PCLCallback,this);
 
         }
