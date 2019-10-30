@@ -6,8 +6,8 @@
     <!-- include file="$(find ouster_ros)/launch/lidar2_segment.launch" /-->
     <include file="$(find ouster_ros)/launch/lidar1_segment.launch"/>
     <!--
-    <node pkg="ouster_ros" type="lidar_filter_node" name ="lidar_filter_node" respawn = "true">
-        <remap from="os1_node2/points" to="os1_node1/points"/>
+    <node pkg="ouster_ros" type="lidar_angle" name ="lidar_angle" respawn = "true">
+        <remap from="lidar_angle/input_points" to="os1_node1/points"/>
     </node>
     -->
     
