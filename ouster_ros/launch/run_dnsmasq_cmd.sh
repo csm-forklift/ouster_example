@@ -4,6 +4,7 @@
 # This script runs the dnsmasq service and allows it to be done from a launch
 # file. Simply set the password for your user in the appropriate place and make
 # this file executable. Then it can be added to a launch file and run as a node.
+# Rename the file "run_dnsmasq.sh".
 ################################################################################
 
 # Start the dnsmasq program
